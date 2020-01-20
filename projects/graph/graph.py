@@ -41,6 +41,7 @@ class Graph:
         q = Queue()
         # Create an empty Set to store visted vertices
         visited = set()
+        q.enqueue(starting_vertex)
         # While the queue is not empty...
         while q.size() > 0:
             # Dequeue the first vertex
@@ -59,7 +60,16 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        s = Stack()
+        visited = set()
+        s.push(starting_vertex)
+        while s.size() > 0:
+            v = s.pop()
+            if v not in visited:
+                print(v)
+                visited.add(v)
+                for neighbor in self.vertices[v]:
+                    s.push(neighbor)
 
     def dft_recursive(self, starting_vertex):
         """
