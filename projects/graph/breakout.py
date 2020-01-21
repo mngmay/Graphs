@@ -24,6 +24,7 @@ None
 '''
 
 from graph import Graph
+from timeit import default_timer as timer
 
 words = []
 with open('words.txt', 'r') as wordsfile:
@@ -31,7 +32,28 @@ with open('words.txt', 'r') as wordsfile:
         currentWord = word[:-1]
         words.append(currentWord)
 
-print(words)
+
 
 def transform(begin_word, end_word):
-    pass
+    start = timer()
+# get words that are the same length as the beginning word to rule out irrelevant sized words
+    valid_words = [word.lower() for word in words if len(word) == len(begin_word)]
+# create graph with valid words 
+    word_graph = Graph()
+    for word in valid_words:
+        word_graph.add_vertex(word)
+
+# create edge between words if there's a 1 letter difference 
+    for word in valid_words:
+        for reviewed in valid_words:
+            if word != reviewed and sum(a!=b for a,b in zip(word, reviewed)) == 1:
+                word_graph.add_edge(word, reviewed)
+
+# call bfs to find the shortest path
+    print("Path found in:" + str(timer() - start))
+    return word_graph.bfs(begin_word, end_word)
+        
+
+
+print(transform("sail", "boat"))
+print(transform("hit", "cog"))
