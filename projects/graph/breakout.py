@@ -36,6 +36,8 @@ with open('words.txt', 'r') as wordsfile:
 
 def transform(begin_word, end_word):
     start = timer()
+    if len(begin_word) != len(end_word):
+        return None
 # get words that are the same length as the beginning word to rule out irrelevant sized words
     valid_words = [word.lower() for word in words if len(word) == len(begin_word)]
 # create graph with valid words 
@@ -57,3 +59,4 @@ def transform(begin_word, end_word):
 
 print(transform("sail", "boat"))
 print(transform("hit", "cog"))
+print(transform("hungry", "happy"))
