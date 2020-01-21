@@ -107,6 +107,7 @@ class Graph:
                     for v in neighbors:
                         new_path = path + [v]
                         q.enqueue(new_path)
+        return "bfs - No path exists"
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -130,8 +131,9 @@ class Graph:
                     for v in neighbors:
                         new_path = path + [v]
                         s.push(new_path)
+        return "dfs - No path exists"
 
-    def dfs_recursive(self, starting_vertex):
+    def dfs_recursive(self, starting_vertex, destination, visited=set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -139,7 +141,19 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+
+        if starting_vertex not in visited:
+            if starting_vertex == destination:
+                return [starting_vertex]
+
+            else:
+                visited.add(starting_vertex)
+                neighbors = self.get_neighbors(starting_vertex)
+                for v in neighbors:
+                    path = self.dfs_recursive(v, destination)
+                    if path:
+                        print("dfs recursive", path)
+                        return [starting_vertex] + path
 
 
 if __name__ == '__main__':
@@ -201,6 +215,7 @@ if __name__ == '__main__':
         [1, 2, 4, 6]
     '''
     print(graph.bfs(1, 6))
+    print(graph.bfs(1, 10))
 
     '''
     Valid DFS paths:
@@ -208,4 +223,6 @@ if __name__ == '__main__':
         [1, 2, 4, 7, 6]
     '''
     print(graph.dfs(1, 6))
+    print(graph.dfs(1, 10))
     print(graph.dfs_recursive(1, 6))
+    print(graph.dfs_recursive(1, 2))
