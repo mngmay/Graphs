@@ -4,16 +4,13 @@ from util import Stack
 
 def earliest_ancestor(ancestors, starting_node):
     graph = Graph()
-    added = []
     # make a graph inserting all of the ancestors
-    for pair in ancestors:
-        if pair[0] not in added:
-            graph.add_vertex(pair[0])
-            added.append(pair[0])
-        if pair[1] not in added:
-            graph.add_vertex(pair[1])
-            added.append(pair[1])
-        graph.add_edge(pair[0], pair[1])
+    for parent, child in ancestors:
+        graph.add_vertex(parent)
+        graph.add_vertex(child)
+    
+    for parent, child in ancestors:
+        graph.add_edge(parent, child)
 
     # to find the earliest ancestor, 
     # find the parent node where the starting_node is in the set
