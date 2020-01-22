@@ -18,7 +18,7 @@ def earliest_ancestor(ancestors, starting_node):
     
     stack = Stack()
     
-    def find_earliest(node):    
+    def find_earliest(node, stack):    
         for parent in graph.vertices: 
             if node in graph.vertices[parent]:
                 stack.push(parent)
@@ -28,6 +28,6 @@ def earliest_ancestor(ancestors, starting_node):
             else:
                 return -1
         new_node = stack.pop()
-        return find_earliest(new_node)
+        return find_earliest(new_node, stack)
     
-    return find_earliest(starting_node)
+    return find_earliest(starting_node, stack)
