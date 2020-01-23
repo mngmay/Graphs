@@ -75,7 +75,7 @@ class SocialGraph:
 
         random.shuffle(possible_friendships)
 
-        for i in range(num_users*avg_friendships):
+        for i in range(num_users*avg_friendships//2):
             self.add_friendship(possible_friendships[i][0], possible_friendships[i][1])
 
 
@@ -99,10 +99,9 @@ class SocialGraph:
             user = path[-1]
             if user not in visited:
                 visited[user] = path
-                if self.friendships[user]:
-                    for connection in self.friendships[user]:
-                        new_path = path + [connection]
-                        queue.enqueue(new_path)
+                for connection in self.friendships[user]:
+                    new_path = path + [connection]
+                    queue.enqueue(new_path)
 
         return visited
 
